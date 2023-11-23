@@ -1,0 +1,56 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Page Selection</title>
+</head>
+<body>
+
+  <h1>Select Movie Page</h1>
+
+  <form action="/fetch-movies" method="POST">
+    <label for="page">Enter page number (1-55): </label>
+    <input type="number" id="page" name="page" min="1" max="55" required>
+    <button type="submit">Fetch Movies</button>
+  </form>
+  <h1>Top Rated Movies by Genre</h1>
+  
+  <h1>top Movies</h1>
+ 
+  <title>Top Rated Movies</title>
+</head>
+<body>
+  <form action="/movies/" method="GET">
+    <label for="genre">Select a genre:</label>
+    <select name="genre" id="genre">
+      <option value="28">Action</option>
+      <option value="12">Adventure</option>
+      <option value="16">Animation</option>
+      <option value="35">Comedy</option>
+      <option value="80">Crime</option>
+      <option value="99">Documentary</option>
+      <option value="18">Drama</option>
+      <option value="10751">Family</option>
+      <option value="14">Fantasy</option>
+      <option value="36">History</option>
+      <option value="27">Horror</option>
+      <option value="10402">Music</option>
+      <option value="9648">Mystery</option>
+      <option value="10749">Romance</option>
+      <option value="878">Science Fiction</option>
+      <option value="10770">TV Movie</option>
+      <option value="53">Thriller</option>
+      <option value="10752">War</option>
+      <option value="37">Western</option>
+    </select>
+    
+    <button type="submit">Submit</button>
+  </form>
+
+
+  
+</body>
+</html>
+
