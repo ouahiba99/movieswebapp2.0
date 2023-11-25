@@ -1,11 +1,13 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movie Page Selection</title>
 </head>
+
 <body>
 
   <h1>Select Movie Page</h1>
@@ -15,14 +17,12 @@
     <input type="number" id="page" name="page" min="1" max="55" required>
     <button type="submit">Fetch Movies</button>
   </form>
+
   <h1>Top Rated Movies by Genre</h1>
-  
-  <h1>top Movies</h1>
- 
-  <title>Top Rated Movies</title>
-</head>
-<body>
-  <form action="/movies/" method="GET">
+
+  <h1>Top Movies</h1>
+
+  <form action="/movies/" method="POST">
     <label for="genre">Select a genre:</label>
     <select name="genre" id="genre">
       <option value="28">Action</option>
@@ -45,12 +45,11 @@
       <option value="10752">War</option>
       <option value="37">Western</option>
     </select>
-    
+
     <button type="submit">Submit</button>
   </form>
 
 
-  
 </body>
-</html>
 
+</html>

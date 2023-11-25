@@ -191,47 +191,65 @@ function isLoggedIn(req, res, next) {
   res.redirect('/login');
 }
 
-app.use(express.static('public'));
-app.use(bodyParser.json());
-
-app.get('/movies/', (req, res) => {
-  const genreId = req.query.genre;
-
-  if (!genreId) {
-    return res.status(400).json({ error: 'Invalid genre ID' });
-  }
-
-  getTopRatedMoviesByGenre(genreId)
-    .then(result => res.json(result))
-    .catch(error => res.status(500).json({ error: error.message }));
-});
-
-function getTopRatedMoviesByGenre(genreId) {
-  const ACC_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZDBlN2FiNzhjODUyMjUwMzQ1ODhmODY0ZDNiYmQ4ZiIsInN1YiI6IjY1NWJjOGFhYjU0MDAyMTRkMTE4YTc4YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.81S8bZifrVSUhDsHNUgZcRLXLlaqNF4HTEVXQXZL6oE';  // Replace with your actual access token
-
-  const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genreId}`;
-
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${ACC_TOKEN}`
-    }
-  };
-
-  return fetch(url, options)
-    .then(response => response.json())
-    .then(data => {
-      if (!data.results) {
-        throw new Error('Failed to retrieve movie data');
-      }
-      const topRatedMovies = data.results.slice(0, 5);
-      return { genreId, topRatedMovies };
-    })
-    .catch(() => {
-      throw new Error('Failed to retrieve movie data');
-    });
-}
+// Handle movie top in geners 
+app.post('/movies/', async (req, res) => {
+	try {
+	  const { genre } = req.query;
+  
+	  // Fetch the first page and the first 5 movies
+	  const movieApiBaseUrl = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc';
+	  const movieApiOptions = {
+		method: 'GET',
+		headers: {
+		  accept: 'application/json',
+		  Authorization: `Bearer ${ACC_TOKEN}`,
+		},
+	  };
+  
+	  const movieApiUrl = `${movieApiBaseUrl}&with_genres=${genre}&page=1`;
+	  const response = await fetch(movieApiUrl, movieApiOptions);
+	  const json = await response.json();
+  
+	  // Display only the first 5 movies
+	  const firstFiveMovies = json.results.slice(0, 5);
+	  console.log(firstFiveMovies);
+  
+	  res.json(firstFiveMovies);
+	} catch (err) {
+	  console.error('error:', err);
+	  res.status(500).json({ error: 'Internal Server Error' });
+	}
+  });
+  
+// Handle movie top in geners 
+app.post('/series/', async (req, res) => {
+	try {
+	  const { genre } = req.query;
+  
+	  // Fetch the first page and the first 5 movies
+	  const seriesApiBaseUrl = 'https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc';
+	  const seriesApiOptions = {
+		method: 'GET',
+		headers: {
+		  accept: 'application/json',
+		  Authorization: `Bearer ${ACC_TOKEN}`,
+		},
+	  };
+  
+	  const seriesApiUrl = `${seriesApiBaseUrl}&with_genres=${genre}&page=1`;
+	  const response = await fetch(seriesApiUrl, seriesApiOptions);
+	  const json = await response.json();
+  
+	  // Display only the first 5 movies
+	  const firstFiveSeries = json.results.slice(0, 5);
+	  console.log(firstFiveSeries);
+  
+	  res.json(firstFiveSeries);
+	} catch (err) {
+	  console.error('error:', err);
+	  res.status(500).json({ error: 'Internal Server Error' });
+	}
+  });
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
